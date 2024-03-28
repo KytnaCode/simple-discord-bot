@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// Open a the log file writter.
-	f, err := os.Open("log.json") // Log file's name.
+	f, err := os.Create("log.json") // Log file's name.
 	if err != nil {
 		slog.Default().Error("Error has occurred: ", err)
 

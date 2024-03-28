@@ -1,0 +1,11 @@
+version: '3'
+
+# All paths are relative to this folder (/build), not to project's root.
+
+services:
+  bot:
+    build:
+      context: .. # Dockerfile paths ARE relative to project's root
+      dockerfile: ./build/Dockerfile
+    volumes:
+      - ..:/app 

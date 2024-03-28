@@ -62,3 +62,13 @@ linters:
     - whitespace
     - wrapcheck
     - wsl
+linters-settings:
+  depguard:
+    rules:
+      Main:
+        files:
+          - $all
+        allow:
+          - "github.com/kytnacode/simple-discord-bot"
+          - $gostd
+        list-mode: strict

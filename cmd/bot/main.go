@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/kytnacode/simple-discord-bot/internal/routes"
 	"github.com/kytnacode/simple-discord-bot/internal/srv"
 	"github.com/kytnacode/simple-discord-bot/pkg/logging"
 )
@@ -33,6 +34,8 @@ func main() {
 	logger.Info("Starting App!")
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("GET /", routes.Home)
+
 	server := srv.NewServer(mux)
 
 	err = server.ListenAndServe()

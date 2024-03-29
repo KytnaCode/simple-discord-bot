@@ -9,3 +9,5 @@ services:
       dockerfile: ./build/Dockerfile
     volumes:
       - ..:/app 
+    ports:
+      - "4000:4000"

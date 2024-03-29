@@ -11,7 +11,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 	}
 
-	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 
 	_, err := w.Write([]byte("{ \"message\": \"Hello world\" }"))

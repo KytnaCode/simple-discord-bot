@@ -2,8 +2,10 @@ package main
 
 import (
 	"log/slog"
+	"net/http"
 	"os"
 
+	"github.com/kytnacode/simple-discord-bot/internal/srv"
 	"github.com/kytnacode/simple-discord-bot/pkg/logging"
 )
 
@@ -29,4 +31,16 @@ func main() {
 	logger := slog.Default()
 
 	logger.Info("Starting App!")
+
+	mux := http.NewServeMux()
+	server := srv.NewServer(mux)
+
+	err = server.ListenAndServe()
+	if err != nil {
+		logger.Error("Error on app startup: ", err)
+
+		return
+	}
+
+	logger.Info("App stopped")
 }

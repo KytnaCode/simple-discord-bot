@@ -3,6 +3,7 @@ package discord
 import (
 	"crypto/ed25519"
 	"fmt"
+	"slices"
 )
 
 type Verifier interface {
@@ -39,4 +40,14 @@ func (rv *RequestVerifier) SetTimestamp(ts []byte) {
 
 func (rv *RequestVerifier) SetBodyContent(bc []byte) {
 	rv.bodyContent = bc
+}
+
+func (rv *RequestVerifier) Verify() bool {
+	isVerified := ed25519.Verify(
+		rv.publicKey,
+		slices.Concat(rv.timestamp, rv.bodyContent),
+		rv.signature,
+	)
+
+	return isVerified
 }

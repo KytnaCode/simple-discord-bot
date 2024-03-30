@@ -68,3 +68,31 @@ func TestRequestVerifier_VerifyShouldReturnFalseWithInvalidInputs(t *testing.T) 
 		t.Error("isVerified must be false with invalid inputs")
 	}
 }
+
+func TestRequestVerifier_VerifyShouldNotPanicIfPublicKeyIsWrongSized(t *testing.T) {
+	t.Parallel()
+
+	defer func() {
+		if r := recover(); r != nil {
+			t.Errorf("Verify() must not panic")
+		}
+	}()
+
+	ts := []byte("my timestamp")
+	bc := []byte("my body content")
+	pk := []byte("invalid public key")
+	sg := []byte("invalid signature")
+
+	rv := new(discord.RequestVerifier)
+
+	rv.SetPublicKey(pk)
+	rv.SetSignature(sg)
+	rv.SetTimestamp(ts)
+	rv.SetBodyContent(bc)
+
+	isVerified := rv.Verify()
+
+	if isVerified {
+		t.Error("isVerified must be false with wrong-sized public key")
+	}
+}

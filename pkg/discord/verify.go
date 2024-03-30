@@ -36,3 +36,7 @@ func (rv *RequestVerifier) SetSignature(sg []byte) error {
 func (rv *RequestVerifier) SetTimestamp(ts []byte) {
 	rv.timestamp = ts
 }
+
+func (rv *RequestVerifier) SetBodyContent(bc []byte) {
+	rv.bodyContent = bc
+}

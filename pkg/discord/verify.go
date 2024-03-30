@@ -22,3 +22,13 @@ func (rv *RequestVerifier) SetPublicKey(pk []byte) error {
 
 	return nil
 }
+
+func (rv *RequestVerifier) SetSignature(sg []byte) error {
+	if len(sg) != ed25519.SignatureSize {
+		return fmt.Errorf("signature bad size: expected %v got %v", ed25519.SignatureSize, len(sg))
+	}
+
+	rv.signature = sg
+
+	return nil
+}

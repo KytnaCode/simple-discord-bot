@@ -36,3 +36,36 @@ func TestRequestVerifier_SetPublicKeyShouldReturnAnErrorWithWrongSizedkey(t *tes
 		t.Error("SetPublicKey must return an error with a wrong-sized key")
 	}
 }
+
+func TestRequestVerifier_SetSignatureShouldAcceptValidSignature(t *testing.T) {
+	t.Parallel()
+
+	msg := []byte("Hello World!")
+
+	_, prk, err := ed25519.GenerateKey(rand.Reader)
+	if err != nil {
+		t.Errorf("error on key generating: %v", err)
+	}
+
+	sg := ed25519.Sign(prk, msg)
+
+	rv := new(discord.RequestVerifier)
+
+	err = rv.SetSignature(sg)
+	if err != nil {
+		t.Errorf("SetSignature returned an error with a valid signature: %v", err)
+	}
+}
+
+func TestRequestVerifier_SetSignatureShouldReturnAnErrorWithWrongSizedSignature(t *testing.T) {
+	t.Parallel()
+
+	sg := []byte("my invalid signature")
+
+	rv := new(discord.RequestVerifier)
+
+	err := rv.SetSignature(sg)
+	if err == nil {
+		t.Error("SetSignature returned a nil error with an invalid signature")
+	}
+}

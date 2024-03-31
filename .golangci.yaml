@@ -70,5 +70,6 @@ linters-settings:
           - $all
         allow:
           - "github.com/kytnacode/simple-discord-bot"
+          - "github.com/joho/godotenv"
           - $gostd
         list-mode: strict

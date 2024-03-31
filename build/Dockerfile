@@ -10,7 +10,7 @@ RUN go install github.com/cosmtrek/air@latest
 
 # We wont copy `go.sum` along with `go.mod` since it isn't generated because we haven't installed modules yet.
 # TODO: Copy `go.sum` when modules are installed.
-COPY go.mod ./
+COPY go.mod go.sum ./
 RUN go mod download
 
 # Copy files

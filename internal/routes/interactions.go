@@ -67,9 +67,18 @@ func InteractionsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 
-	if req.Type != 1 {
-		return
+	if req.Type == 1 {
+		handlers.Pong(w, &req)
 	}
 
-	handlers.Pong(w, &req)
+	if req.Type == 2 {
+		var interactionReq discord.InteractionRequest
+
+		err = json.Unmarshal(b, &interactionReq)
+		if err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		}
+
+		handlers.CommandHandler(w, interactionReq)
+	}
 }
